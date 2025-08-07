@@ -22,7 +22,7 @@ ZIPNAME="${DEVICE}-$(date '+%Y%m%d-%H%M').zip"
 export ARCH=arm64
 export KBUILD_BUILD_USER=aryan
 export KBUILD_BUILD_HOST=celeste
-export PATH="/home/celeste/pixelos/prebuilts/clang/host/linux-x86/clang-r530567/bin/:$PATH"
+export PATH="~/clang-r530567/bin/:$PATH"
 
 if [[ $1 = "-c" || $1 = "--clean" ]]; then
 	rm -rf out
@@ -53,15 +53,15 @@ echo -e "\nKernel compiled successfully! Zipping up...\n"
 if [ -d "$AK3_DIR" ]; then
 	cp -r $AK3_DIR AnyKernel3
 else
-	if ! git clone -q https://github.com/basamaryan/AnyKernel3 -b master AnyKernel3; then
+	if ! git clone -q https://github.com/kernel-build-from-rainyland/AnyKernel3 -b sweet AnyKernel3; then
 		echo -e "\nAnyKernel3 repo not found locally and couldn't clone from GitHub! Aborting..."
 		exit 1
 	fi
 fi
 
-# Modify anykernel.sh to replace device names
-sed -i "s/device\.name1=.*/device.name1=${DEVICE}/" AnyKernel3/anykernel.sh
-sed -i "s/device\.name2=.*/device.name2=${DEVICE}in/" AnyKernel3/anykernel.sh
+# # Modify anykernel.sh to replace device names
+# sed -i "s/device\.name1=.*/device.name1=${DEVICE}/" AnyKernel3/anykernel.sh
+# sed -i "s/device\.name2=.*/device.name2=${DEVICE}in/" AnyKernel3/anykernel.sh
 
 cp $kernel AnyKernel3
 cp $dtbo AnyKernel3
