@@ -136,6 +136,7 @@ struct netns_ipv4 {
 	int sysctl_tcp_plb_idle_rehash_rounds;
 	int sysctl_tcp_plb_rehash_rounds;
 	int sysctl_tcp_plb_suspend_rto_sec;
+	int sysctl_tcp_plb_cong_thresh;
 
 #ifdef CONFIG_NET_L3_MASTER_DEV
 	int sysctl_udp_l3mdev_accept;
