@@ -132,6 +132,10 @@ struct netns_ipv4 {
 	int sysctl_tcp_early_retrans;
 	struct inet_timewait_death_row tcp_death_row;
 	int sysctl_max_syn_backlog;
+	int sysctl_tcp_plb_enabled;
+	int sysctl_tcp_plb_idle_rehash_rounds;
+	int sysctl_tcp_plb_rehash_rounds;
+	int sysctl_tcp_plb_suspend_rto_sec;
 
 #ifdef CONFIG_NET_L3_MASTER_DEV
 	int sysctl_udp_l3mdev_accept;
