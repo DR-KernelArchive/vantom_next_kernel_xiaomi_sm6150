@@ -69,6 +69,7 @@ static void proc_command_line_init(void) {
     }
 #endif
 }
+#endif
 
 #ifdef CONFIG_KSU_SUSFS_SPOOF_CMDLINE_OR_BOOTCONFIG
 extern int susfs_spoof_cmdline_or_bootconfig(struct seq_file *m);
