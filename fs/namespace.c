@@ -322,9 +322,6 @@ static struct mount *susfs_reuse_sus_vfsmnt(const char *name, int orig_mnt_id)
 		INIT_LIST_HEAD(&mnt->mnt_slave);
 		INIT_HLIST_NODE(&mnt->mnt_mp_list);
 		INIT_LIST_HEAD(&mnt->mnt_umounting);
-#ifdef CONFIG_FSNOTIFY
-		INIT_HLIST_HEAD(&mnt->mnt_fsnotify_marks);
-#endif
 		init_fs_pin(&mnt->mnt_umount, drop_mountpoint);
 	}
 	return mnt;
@@ -377,9 +374,6 @@ static struct mount *susfs_alloc_sus_vfsmnt(const char *name)
 		INIT_LIST_HEAD(&mnt->mnt_slave);
 		INIT_HLIST_NODE(&mnt->mnt_mp_list);
 		INIT_LIST_HEAD(&mnt->mnt_umounting);
-#ifdef CONFIG_FSNOTIFY
-		INIT_HLIST_HEAD(&mnt->mnt_fsnotify_marks);
-#endif
 		init_fs_pin(&mnt->mnt_umount, drop_mountpoint);
 	}
 	return mnt;
@@ -1397,15 +1391,6 @@ bypass_orig_flow:
 	mnt->mnt.mnt_root = dget(root);
 	mnt->mnt_mountpoint = mnt->mnt.mnt_root;
 	mnt->mnt_parent = mnt;
-
-#ifdef CONFIG_KSU_SUSFS_SUS_MOUNT
-	// If caller process is zygote and not doing unshare, so we just reorder the mnt_id
-	if (likely(is_current_zygote_domain) && !(flag & CL_ZYGOTE_COPY_MNT_NS)) {
-		mnt->mnt.susfs_mnt_id_backup = mnt->mnt_id;
-		mnt->mnt_id = current->susfs_last_fake_mnt_id++;
-	}
-#endif
-
 	lock_mount_hash();
 	list_add_tail(&mnt->mnt_instance, &sb->s_mounts);
 	unlock_mount_hash();
