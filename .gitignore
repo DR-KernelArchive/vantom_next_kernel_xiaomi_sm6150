@@ -131,3 +131,8 @@ kernel/configs/android-*.cfg
 #
 Android.bp
 *.orig
+
+KernelSU/
+kernelSU-Next/
+drivers/kernelsu
+out/
